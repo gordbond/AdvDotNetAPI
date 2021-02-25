@@ -7,6 +7,10 @@ using AdvDotNetAPI.Models;
 
 namespace AdvDotNetAPI.Models
 {
+    /// <summary>
+    /// Database context for this API
+    /// Co-ordinateswith between EF and the model
+    /// </summary>
     public class MedicalDataContext : DbContext
     {
 

@@ -16,13 +16,14 @@ namespace AdvDotNetAPI.Models
         [Required]
         public string Name { get; set; }
 
-        //THIS STILL NEEDS TO BE UPDATED -> MUST BE ONE OF: Hospital, Clinic or Pharmacy
         //Type of the Organization
         [Required]
+        [RegularExpression(@"/\b(?:Hospital | Clinic | Pharmacy)\b/gi", ErrorMessage = "Must be one of Hospital, Clinic or Pharmacy")]
         public string Type { get; set; }
 
         //Address of Organization
         [Required]
+        
         public string Address { get; set; }
 
     }

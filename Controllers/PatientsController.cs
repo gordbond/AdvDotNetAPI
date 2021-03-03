@@ -22,9 +22,36 @@ namespace AdvDotNetAPI.Controllers
 
         // GET: api/Patients
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Patient>>> GetPatients()
+        public async Task<ActionResult<IEnumerable<Patient>>> GetPatients(string? firstName, string? lastName, string? dateOfBirth)
         {
+            //Guard statement - If no parameters return all patients
+            if (firstName == null && lastName == null && dateOfBirth == null) 
+            {
+                return await _context.Patients.ToListAsync();
+            }
+
+            //This structure allows for only one of these parameters to be used with order of priority
+
+            if (firstName != null)
+            {
+                return await _context.Patients.Where(e => e.FirstName == firstName).ToListAsync();
+            }
+
+            if (lastName != null)
+            {
+                return await _context.Patients.Where(e => e.LastName == lastName).ToListAsync();
+            }
+
+            //Not sure if this is the correct implementation - need to test it 
+            if (dateOfBirth != null)
+            {
+                DateTime parsedDate = DateTime.Parse(dateOfBirth);
+                DateTimeOffset dateOfBirthForQuery = new DateTimeOffset();
+                return await _context.Patients.Where(e => e.DateOfBirth == dateOfBirthForQuery).ToListAsync();
+            }
+
             return await _context.Patients.ToListAsync();
+
         }
 
         // GET: api/Patients/5

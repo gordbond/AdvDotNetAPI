@@ -21,12 +21,6 @@ namespace AdvDotNetAPI.Models
 
         //Immunization DBset - used to create queries for instances of Immunizations
         public DbSet<Immunization> Immunizations { get; set; }
-       
-        //MedicalEntity DBset - used to create queries for instances of MedicalEntity
-        public DbSet<MedicalEntity> MedicalEntities { get; set; }
-
-        //Person DBset - used to create queries for instances of Person
-        public DbSet<Person> People { get; set; }
 
         //Patient DBset - used to create queries for instances of Patient
         public DbSet<Patient> Patients { get; set; }

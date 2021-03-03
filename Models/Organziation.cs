@@ -18,7 +18,7 @@ namespace AdvDotNetAPI.Models
 
         //Type of the Organization
         [Required]
-        [RegularExpression(@"/\b(?:Hospital | Clinic | Pharmacy)\b/gi", ErrorMessage = "Must be one of Hospital, Clinic or Pharmacy")]
+        [RegularExpression(@"\b(?i:Hospital|Clinic|Pharmacy)\b")]
         public string Type { get; set; }
 
         //Address of Organization

@@ -13,21 +13,57 @@ namespace AdvDotNetAPI.Controllers
     [ApiController]
     public class ProvidersController : ControllerBase
     {
+        //Dependency injected data context
         private readonly MedicalDataContext _context;
 
+        /// <summary>
+        /// ProvidersController Constructor assigns data context via DI
+        /// </summary>
+        /// <param name="context">data context</param>
         public ProvidersController(MedicalDataContext context)
         {
             _context = context;
         }
 
-        // GET: api/Providers
+        /// <summary>
+        /// GET: api/provider
+        /// No parameters gets all Providers
+        /// Or use firstName, lastName or licenseNumber to get Provider by a specific filter
+        /// </summary>
+        /// <param name="firstName">Provider's first name</param>
+        /// <param name="lastName">Provider's Last name</param>
+        /// <param name="licenseNumber">Provider's licenseNumber</param>
+        /// <returns>List of Provider data</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Provider>>> GetProviders()
+        public async Task<ActionResult<IEnumerable<Provider>>> GetProviders(string firstName, string lastName, string licenseNumber)
         {
-            return await _context.Providers.ToListAsync();
+            IQueryable<Provider> filteredList = _context.Providers.AsQueryable();
+
+            if (!String.IsNullOrEmpty(firstName))
+            {
+                filteredList = filteredList.Where(e => e.FirstName == firstName).AsQueryable();
+            }
+
+            if (!String.IsNullOrEmpty(lastName))
+            {
+                filteredList = filteredList.Where(e => e.LastName == lastName).AsQueryable();
+            }
+
+            if (!String.IsNullOrEmpty(licenseNumber))
+            {
+                uint licenseNumberForQuery = uint.Parse(licenseNumber);
+                filteredList = filteredList.Where(e => e.LicenseNumber == licenseNumberForQuery).AsQueryable();
+            }
+
+            return await filteredList.ToListAsync();
         }
 
-        // GET: api/Providers/5
+
+        /// <summary>
+        /// GET: api/Providers/5
+        /// </summary>
+        /// <param name="id">Id of Provider to get</param>
+        /// <returns>Specific Provider info based on Id</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Provider>> GetProvider(Guid id)
         {
@@ -41,8 +77,13 @@ namespace AdvDotNetAPI.Controllers
             return provider;
         }
 
-        // PUT: api/Providers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // 
+        /// <summary>
+        /// PUT: api/Providers/5
+        /// </summary>
+        /// <param name="id">Id of provider to update</param>
+        /// <param name="provider">provider data to update</param>
+        /// <returns>No content - status code representing no content</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProvider(Guid id, Provider provider)
         {
@@ -72,8 +113,13 @@ namespace AdvDotNetAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Providers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
+        /// <summary>
+        ///  POST: api/Providers
+        ///  Create a Provider 
+        /// </summary>
+        /// <param name="provider">provider data to create</param>
+        /// <returns>ActionResult - status code 201</returns>
         [HttpPost]
         public async Task<ActionResult<Provider>> PostProvider(Provider provider)
         {
@@ -83,7 +129,11 @@ namespace AdvDotNetAPI.Controllers
             return CreatedAtAction("GetProvider", new { id = provider.Id }, provider);
         }
 
-        // DELETE: api/Providers/5
+        /// <summary>
+        /// DELETE: api/Providers/5
+        /// </summary>
+        /// <param name="id">Id for provide to delete</param>
+        /// <returns>No content - status code 204</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProvider(Guid id)
         {

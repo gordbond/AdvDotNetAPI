@@ -23,7 +23,7 @@ namespace AdvDotNetAPI.Models
 
         public MedicalEntity()
         {
-            this.CreationTime = DateTime.UtcNow;
+            this.CreationTime = DateTimeOffset.UtcNow;
         }
     }
 }

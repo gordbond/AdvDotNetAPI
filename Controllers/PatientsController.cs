@@ -9,52 +9,76 @@ using AdvDotNetAPI.Models;
 
 namespace AdvDotNetAPI.Controllers
 {
+    /// <summary>
+    /// Controller for the Patient API
+    /// 
+    /// Get - Allows for firstName, lastName and dateOfBirth parameters
+    ///     - Can also get by a specific Id
+    /// Put - Updates a specific patient (id's must match)
+    /// Post - Create a new patient
+    /// Delete - Deletes a patient by specific id
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class PatientsController : ControllerBase
     {
+        //Dependency injected data context
         private readonly MedicalDataContext _context;
 
+        
+        /// <summary>
+        /// PatientsController Constructor assigns data context via DI
+        /// </summary>
+        /// <param name="context">data context</param>
         public PatientsController(MedicalDataContext context)
         {
             _context = context;
         }
 
-        // GET: api/Patients
+        /// <summary>
+        /// GET: api/Patients
+        /// No parameters gets all patients
+        /// Or use firstName, lastName or dataOfBirth to get patients by a specific filter
+        /// </summary>
+        /// <param name="firstName">Patient's first name</param>
+        /// <param name="lastName">Patient's Last name</param>
+        /// <param name="dateOfBirth">Patient's Date of birth</param>
+        /// <returns>List of patient data</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Patient>>> GetPatients(string? firstName, string? lastName, string? dateOfBirth)
+        public async Task<ActionResult<IEnumerable<Patient>>> GetPatients(string firstName = null, string lastName = null, string dateOfBirth = null)
         {
-            //Guard statement - If no parameters return all patients
-            if (firstName == null && lastName == null && dateOfBirth == null) 
+            
+            IQueryable<Patient> filteredList = _context.Patients.AsQueryable();
+
+            if (!String.IsNullOrEmpty(firstName))
             {
-                return await _context.Patients.ToListAsync();
+                filteredList = filteredList.Where(e => e.FirstName == firstName).AsQueryable();
             }
 
-            //This structure allows for only one of these parameters to be used with order of priority
-
-            if (firstName != null)
+            if (!String.IsNullOrEmpty(lastName))
             {
-                return await _context.Patients.Where(e => e.FirstName == firstName).ToListAsync();
+                filteredList = filteredList.Where(e => e.LastName == lastName).AsQueryable();
             }
 
-            if (lastName != null)
+            if (!String.IsNullOrEmpty(dateOfBirth))
             {
-                return await _context.Patients.Where(e => e.LastName == lastName).ToListAsync();
+                DateTimeOffset dateForQuery = DateTimeOffset.Parse(dateOfBirth);
+                filteredList = filteredList.Where(e => e.DateOfBirth == dateForQuery).AsQueryable();
             }
 
-            //Not sure if this is the correct implementation - need to test it 
-            if (dateOfBirth != null)
-            {
-                DateTime parsedDate = DateTime.Parse(dateOfBirth);
-                DateTimeOffset dateOfBirthForQuery = new DateTimeOffset();
-                return await _context.Patients.Where(e => e.DateOfBirth == dateOfBirthForQuery).ToListAsync();
-            }
-
-            return await _context.Patients.ToListAsync();
+            return await filteredList.ToListAsync();
+           
 
         }
 
-        // GET: api/Patients/5
+
+
+
+        /// <summary>
+        /// GET: api/Patients/5
+        /// </summary>
+        /// <param name="id">Id of patient to get</param>
+        /// <returns>Specific patient info based on Id</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Patient>> GetPatient(Guid id)
         {
@@ -68,13 +92,19 @@ namespace AdvDotNetAPI.Controllers
             return patient;
         }
 
-        // PUT: api/Patients/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
+        /// <summary>
+        /// PUT: api/Patients/5
+        /// </summary>
+        /// <param name="id">Id of patient to update</param>
+        /// <param name="patient">patient data to update</param>
+        /// <returns>No content - status code representing no content</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPatient(Guid id, Patient patient)
         {
             if (id != patient.Id)
             {
+                Console.Write("issue with the ID. Given ID: " + id + " Patient ID: " + patient.Id);
                 return BadRequest();
             }
 
@@ -99,8 +129,12 @@ namespace AdvDotNetAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Patients
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+       
+        /// <summary>
+        /// POST: api/Patients
+        /// </summary>
+        /// <param name="patient">Patient to create</param>
+        /// <returns>An action result/status code</returns>
         [HttpPost]
         public async Task<ActionResult<Patient>> PostPatient(Patient patient)
         {
@@ -110,7 +144,12 @@ namespace AdvDotNetAPI.Controllers
             return CreatedAtAction("GetPatient", new { id = patient.Id }, patient);
         }
 
-        // DELETE: api/Patients/5
+
+        /// <summary>
+        /// DELETE: api/Patients/5
+        /// </summary>
+        /// <param name="id">ID of patient to delete</param>
+        /// <returns>An action result/status code</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePatient(Guid id)
         {
@@ -131,4 +170,6 @@ namespace AdvDotNetAPI.Controllers
             return _context.Patients.Any(e => e.Id == id);
         }
     }
+
+    
 }

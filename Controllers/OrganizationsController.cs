@@ -13,21 +13,54 @@ namespace AdvDotNetAPI.Controllers
     [ApiController]
     public class OrganizationsController : ControllerBase
     {
+        //Dependency injected data context
         private readonly MedicalDataContext _context;
 
+        /// <summary>
+        /// OrganizationsController Constructor assigns data context via DI
+        /// </summary>
+        /// <param name="context">data context</param>
         public OrganizationsController(MedicalDataContext context)
         {
             _context = context;
         }
 
-        // GET: api/Organizations
+
+        /// <summary>
+        ///  GET: api/Organizations
+        /// Retrieves Organizations
+        /// If no parameter is used it returns all Organizations
+        /// Can filter results by name or type
+        /// </summary>
+        /// <param name="name">Name of organization</param>
+        /// <param name="type">Type of organization</param>
+        /// <returns>List of organizations</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Organization>>> GetOrganizations()
+        public async Task<ActionResult<IEnumerable<Organization>>> GetOrganizations(string name, string type)
         {
-            return await _context.Organizations.ToListAsync();
+
+            IQueryable<Organization> filteredList = _context.Organizations.AsQueryable();
+
+            if (!String.IsNullOrEmpty(name)) { 
+                filteredList = filteredList.Where(e => e.Name == name).AsQueryable();
+            }
+
+            if (!String.IsNullOrEmpty(type))
+            {
+                filteredList = filteredList.Where(e => e.Type == type).AsQueryable();
+            }
+
+
+            return await filteredList.ToListAsync();
         }
 
-        // GET: api/Organizations/5
+        
+        /// <summary>
+        /// GET: api/Organizations/5
+        /// Retrieve a single Organization by Id
+        /// </summary>
+        /// <param name="id">Id of organization</param>
+        /// <returns>A single organization</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Organization>> GetOrganization(Guid id)
         {
@@ -41,8 +74,14 @@ namespace AdvDotNetAPI.Controllers
             return organization;
         }
 
-        // PUT: api/Organizations/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
+        /// <summary>
+        /// PUT: api/Organizations/5
+        /// Update an organization
+        /// </summary>
+        /// <param name="id">Id of organization</param>
+        /// <param name="organization">Data for organization</param>
+        /// <returns>No content and status code 204</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrganization(Guid id, Organization organization)
         {
@@ -72,8 +111,12 @@ namespace AdvDotNetAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Organizations
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// POST: api/Organizations
+        /// Create a new Organization
+        /// </summary>
+        /// <param name="organization">Data for organization</param>
+        /// <returns>Action result and status code 201</returns>
         [HttpPost]
         public async Task<ActionResult<Organization>> PostOrganization(Organization organization)
         {
@@ -83,7 +126,12 @@ namespace AdvDotNetAPI.Controllers
             return CreatedAtAction("GetOrganization", new { id = organization.Id }, organization);
         }
 
-        // DELETE: api/Organizations/5
+        /// <summary>
+        /// DELETE: api/Organizations/5
+        /// Delete an organization by Id
+        /// </summary>
+        /// <param name="id">Id for organization</param>
+        /// <returns>No content + status code 204</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrganization(Guid id)
         {

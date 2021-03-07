@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdvDotNetAPI.Models;
+using Microsoft.Extensions.Logging;
 
 namespace AdvDotNetAPI.Controllers
 {
@@ -16,13 +17,17 @@ namespace AdvDotNetAPI.Controllers
         //Dependency injected data context
         private readonly MedicalDataContext _context;
 
+        // Logger extension
+        private readonly ILogger _logger;
+
         /// <summary>
         /// ProvidersController Constructor assigns data context via DI
         /// </summary>
         /// <param name="context">data context</param>
-        public ProvidersController(MedicalDataContext context)
+        public ProvidersController(MedicalDataContext context, ILogger<ProvidersController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         /// <summary>
@@ -71,7 +76,9 @@ namespace AdvDotNetAPI.Controllers
 
             if (provider == null)
             {
-                return NotFound();
+                var notFound = NotFound();
+                _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                return notFound;
             }
 
             return provider;
@@ -89,7 +96,9 @@ namespace AdvDotNetAPI.Controllers
         {
             if (id != provider.Id)
             {
-                return BadRequest();
+                var badRequest = BadRequest();
+                _logger.LogError($"Message: {badRequest}, Status code: {badRequest.StatusCode}, Id: {Guid.NewGuid()}");
+                return badRequest;
             }
 
             _context.Entry(provider).State = EntityState.Modified;
@@ -102,10 +111,14 @@ namespace AdvDotNetAPI.Controllers
             {
                 if (!ProviderExists(id))
                 {
-                    return NotFound();
+                    var notFound = NotFound();
+                    _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                    return notFound;
                 }
                 else
                 {
+                    var badRequest = BadRequest();
+                    _logger.LogError($"Message: {badRequest}, Status code: {badRequest.StatusCode}, Id: {Guid.NewGuid()}");
                     throw;
                 }
             }
@@ -140,7 +153,9 @@ namespace AdvDotNetAPI.Controllers
             var provider = await _context.Providers.FindAsync(id);
             if (provider == null)
             {
-                return NotFound();
+                var notFound = NotFound();
+                _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                return notFound;
             }
 
             _context.Providers.Remove(provider);

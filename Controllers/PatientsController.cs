@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdvDotNetAPI.Models;
+using Microsoft.Extensions.Logging;
 
 namespace AdvDotNetAPI.Controllers
 {
@@ -25,14 +26,18 @@ namespace AdvDotNetAPI.Controllers
         //Dependency injected data context
         private readonly MedicalDataContext _context;
 
-        
+        // Logger extension
+        private readonly ILogger _logger;
+
+
         /// <summary>
         /// PatientsController Constructor assigns data context via DI
         /// </summary>
         /// <param name="context">data context</param>
-        public PatientsController(MedicalDataContext context)
+        public PatientsController(MedicalDataContext context, ILogger<PatientsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         /// <summary>
@@ -86,7 +91,9 @@ namespace AdvDotNetAPI.Controllers
 
             if (patient == null)
             {
-                return NotFound();
+                var notFound = NotFound();
+                _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                return notFound;
             }
 
             return patient;
@@ -105,7 +112,9 @@ namespace AdvDotNetAPI.Controllers
             if (id != patient.Id)
             {
                 Console.Write("issue with the ID. Given ID: " + id + " Patient ID: " + patient.Id);
-                return BadRequest();
+                var badRequest = BadRequest();
+                _logger.LogError($"Message: {badRequest}, Status code: {badRequest.StatusCode}, Id: {Guid.NewGuid()}");
+                return badRequest;
             }
 
             _context.Entry(patient).State = EntityState.Modified;
@@ -118,10 +127,14 @@ namespace AdvDotNetAPI.Controllers
             {
                 if (!PatientExists(id))
                 {
-                    return NotFound();
+                    var notFound = NotFound();
+                    _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                    return notFound;
                 }
                 else
                 {
+                    var badRequest = BadRequest();
+                    _logger.LogError($"Message: {badRequest}, Status code: {badRequest.StatusCode}, Id: {Guid.NewGuid()}");
                     throw;
                 }
             }
@@ -156,7 +169,9 @@ namespace AdvDotNetAPI.Controllers
             var patient = await _context.Patients.FindAsync(id);
             if (patient == null)
             {
-                return NotFound();
+                var notFound = NotFound();
+                _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                return notFound;
             }
 
             _context.Patients.Remove(patient);

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdvDotNetAPI.Models;
+using Microsoft.Extensions.Logging;
 
 namespace AdvDotNetAPI.Controllers
 {
@@ -19,13 +20,17 @@ namespace AdvDotNetAPI.Controllers
         //Dependency injected data context
         private readonly MedicalDataContext _context;
 
+        // Logger extension
+        private readonly ILogger _logger;
+
         /// <summary>
         /// ImmunizationController - assigns data context via DI
         /// </summary>
         /// <param name="context">data context</param>
-        public ImmunizationsController(MedicalDataContext context)
+        public ImmunizationsController(MedicalDataContext context, ILogger<ImmunizationsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
       
@@ -83,7 +88,10 @@ namespace AdvDotNetAPI.Controllers
 
             if (immunization == null)
             {
-                return NotFound();
+                var notFound = NotFound();
+                _logger.LogError("fffffffffffffffffffffffffff");
+                //_logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                return notFound;
             }
 
             return immunization;
@@ -104,7 +112,9 @@ namespace AdvDotNetAPI.Controllers
         {
             if (id != immunization.Id)
             {
-                return BadRequest();
+                var badRequest = BadRequest();
+                _logger.LogError($"Message: {badRequest}, Status code: {badRequest.StatusCode}, Id: {Guid.NewGuid()}");
+                return badRequest;
             }
             //Auto generate the UpdatedTime
             immunization.UpdatedTime = DateTimeOffset.UtcNow;
@@ -119,10 +129,14 @@ namespace AdvDotNetAPI.Controllers
             {
                 if (!ImmunizationExists(id))
                 {
-                    return NotFound();
+                    var notFound = NotFound();
+                    _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                    return notFound;
                 }
                 else
                 {
+                    var badRequest = BadRequest();
+                    _logger.LogError($"Message: {badRequest}, Status code: {badRequest.StatusCode}, Id: {Guid.NewGuid()}");
                     throw;
                 }
             }
@@ -163,7 +177,9 @@ namespace AdvDotNetAPI.Controllers
             var immunization = await _context.Immunizations.FindAsync(id);
             if (immunization == null)
             {
-                return NotFound();
+                var notFound = NotFound();
+                _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                return notFound;
             }
 
             _context.Immunizations.Remove(immunization);

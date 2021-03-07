@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AdvDotNetAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Serilog.Extensions.Logging.File;
 
 namespace AdvDotNetAPI
 {
@@ -39,7 +40,7 @@ namespace AdvDotNetAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -56,6 +57,10 @@ namespace AdvDotNetAPI
             {
                 endpoints.MapControllers();
             });
+
+            // Logger configuration
+            loggerFactory.AddFile("Logs/log-{Date}.txt", LogLevel.Error, null, false, 1073741824, 31,
+                "{Message}{NewLine}{Exception}");
         }
     }
 }

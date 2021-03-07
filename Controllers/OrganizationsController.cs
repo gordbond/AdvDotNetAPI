@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AdvDotNetAPI.Models;
+using Microsoft.Extensions.Logging;
 
 namespace AdvDotNetAPI.Controllers
 {
@@ -16,13 +17,17 @@ namespace AdvDotNetAPI.Controllers
         //Dependency injected data context
         private readonly MedicalDataContext _context;
 
+        // Logger extension
+        private readonly ILogger _logger;
+
         /// <summary>
         /// OrganizationsController Constructor assigns data context via DI
         /// </summary>
         /// <param name="context">data context</param>
-        public OrganizationsController(MedicalDataContext context)
+        public OrganizationsController(MedicalDataContext context, ILogger<OrganizationsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
 
@@ -68,7 +73,9 @@ namespace AdvDotNetAPI.Controllers
 
             if (organization == null)
             {
-                return NotFound();
+                var notFound = NotFound();
+                _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                return notFound;
             }
 
             return organization;
@@ -87,7 +94,9 @@ namespace AdvDotNetAPI.Controllers
         {
             if (id != organization.Id)
             {
-                return BadRequest();
+                var badRequest = BadRequest();
+                _logger.LogError($"Message: {badRequest}, Status code: {badRequest.StatusCode}, Id: {Guid.NewGuid()}");
+                return badRequest;
             }
 
             _context.Entry(organization).State = EntityState.Modified;
@@ -100,10 +109,14 @@ namespace AdvDotNetAPI.Controllers
             {
                 if (!OrganizationExists(id))
                 {
-                    return NotFound();
+                    var notFound = NotFound();
+                    _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                    return notFound;
                 }
                 else
                 {
+                    var badRequest = BadRequest();
+                    _logger.LogError($"Message: {badRequest}, Status code: {badRequest.StatusCode}, Id: {Guid.NewGuid()}");
                     throw;
                 }
             }
@@ -138,7 +151,9 @@ namespace AdvDotNetAPI.Controllers
             var organization = await _context.Organizations.FindAsync(id);
             if (organization == null)
             {
-                return NotFound();
+                var notFound = NotFound();
+                _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                return notFound;
             }
 
             _context.Organizations.Remove(organization);

@@ -89,8 +89,7 @@ namespace AdvDotNetAPI.Controllers
             if (immunization == null)
             {
                 var notFound = NotFound();
-                _logger.LogError("fffffffffffffffffffffffffff");
-                //_logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
+                _logger.LogError($"Message: {notFound}, Status code: {notFound.StatusCode}, Id: {Guid.NewGuid()}");
                 return notFound;
             }
 
@@ -112,7 +111,7 @@ namespace AdvDotNetAPI.Controllers
         {
             if (id != immunization.Id)
             {
-                var badRequest = BadRequest();
+                var badRequest = BadRequest(ModelState);
                 _logger.LogError($"Message: {badRequest}, Status code: {badRequest.StatusCode}, Id: {Guid.NewGuid()}");
                 return badRequest;
             }
@@ -135,7 +134,7 @@ namespace AdvDotNetAPI.Controllers
                 }
                 else
                 {
-                    var badRequest = BadRequest();
+                    var badRequest = BadRequest(ModelState);
                     _logger.LogError($"Message: {badRequest}, Status code: {badRequest.StatusCode}, Id: {Guid.NewGuid()}");
                     throw;
                 }

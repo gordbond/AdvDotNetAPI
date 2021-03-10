@@ -33,7 +33,8 @@ namespace AdvDotNetAPI
                 .ConfigureApiBehaviorOptions(options => 
                 {
                     options.SuppressModelStateInvalidFilter = true;
-                });
+                })
+                .AddXmlDataContractSerializerFormatters();
 
             services.AddSwaggerGen(c =>
             {

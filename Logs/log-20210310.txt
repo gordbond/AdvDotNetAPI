@@ -4,3 +4,7 @@ Message: Test!, Status code: 415, Id: 89e259a2-aa36-4bc7-951d-2562130aa8dc
 Message: Test!, Status code: 415, Id: e8c17214-2522-4b26-9ee5-a95165e8b942
 Message: Test!, Status code: 415, Id: d7ede78e-9618-4494-959a-4b3d0cdcb819
 Message: The content is not in either XML or JSON format., Status code: 415, Id: b6234e0a-b8fa-4835-9c23-84a404a734ac
+Message: The GET or PUT completed successfully., Status code: 200, Id: 0a27be41-02bd-4a60-ad73-3cf6f45d5ba3
+Message: The GET or PUT completed successfully., Status code: 200, Id: 0287f253-a34a-4329-954f-a84229685881
+Message: The GET or PUT completed successfully., Status code: 200, Id: 50ca2b71-a2eb-41ca-9301-4b0dbfe5aae7
+Message: The GET or PUT completed successfully., Status code: 200, Id: f650f9f3-2af3-4750-9899-2136cca2e1ab

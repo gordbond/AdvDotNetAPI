@@ -1,3 +1,8 @@
+/* We, Gord Bond, student number 000786196, Tiago Franco de Goes Teles, student number 000786450, 
+ * Olaoluwa Anthony-Egorp, student number 000776467, and Mitchell Aninyang, student number 000796709, 
+ * certify that all code submitted is our own work; that we have not copied it from any other source. 
+ * We also certify that we have not allowed our work to be copied by others.
+ */
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -23,6 +28,11 @@ namespace AdvDotNetAPI
             CreateWebHostBuilder(args).Build().Run();
         }
 
+        /// <summary>
+        /// IWebHostBuilder creates a default builder which configures the Kestrel builder and adds details to Kestrel Builder
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns>IWebHostBuilder</returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
            WebHost.CreateDefaultBuilder(args)
            .UseStartup<Startup>()

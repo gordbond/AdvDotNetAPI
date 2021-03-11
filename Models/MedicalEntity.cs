@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* We, Gord Bond, student number 000786196, Tiago Franco de Goes Teles, student number 000786450, 
+ * Olaoluwa Anthony-Egorp, student number 000776467, and Mitchell Aninyang, student number 000796709, 
+ * certify that all code submitted is our own work; that we have not copied it from any other source. 
+ * We also certify that we have not allowed our work to be copied by others.
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,15 +17,16 @@ namespace AdvDotNetAPI.Models
     /// </summary>
     public class MedicalEntity
     {
-        //Primary Key - Id for each entity in db
+        //Primary Key - Id for each entity in db with getter and setter methods
         [Key]
         [Required]
         public Guid Id { get; set; }
 
-        //Date the entity was created
+        //Date the entity was created in DateTimeOffset Objcet with getter and setter methods
         [Required]
         public DateTimeOffset CreationTime { get; set; }
 
+        //Medical Entity no args constructor that sets the creation time
         public MedicalEntity()
         {
             this.CreationTime = DateTimeOffset.UtcNow;

@@ -107,6 +107,7 @@ namespace AdvDotNetAPI.Controllers
         /// <param name="patient">patient data to update</param>
         /// <returns>No content - status code representing no content</returns>
         [HttpPut("{id}")]
+        [Consumes("application/xml")]
         public async Task<IActionResult> PutPatient(Guid id, Patient patient)
         {
             if (id != patient.Id)
@@ -149,6 +150,7 @@ namespace AdvDotNetAPI.Controllers
         /// <param name="patient">Patient to create</param>
         /// <returns>An action result/status code</returns>
         [HttpPost]
+        [Consumes("application/xml")]
         public async Task<ActionResult<Patient>> PostPatient(Patient patient)
         {
             _context.Patients.Add(patient);

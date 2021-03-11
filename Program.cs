@@ -14,6 +14,10 @@ namespace AdvDotNetAPI
 {
     public class Program
     {
+        /// <summary>
+        /// Main method for the program
+        /// </summary>
+        /// <param name="args">Returns a string of args to the web host builder</param>
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();

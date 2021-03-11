@@ -107,6 +107,7 @@ namespace AdvDotNetAPI.Controllers
         /// <returns>No content + 204 status code</returns>
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Consumes("application/xml")]
         public async Task<IActionResult> PutImmunization(Guid id, Immunization immunization)
         {
             if (id != immunization.Id)
@@ -151,6 +152,7 @@ namespace AdvDotNetAPI.Controllers
         /// <param name="immunization">Data for Immunization record</param>
         /// <returns>ActionResult and status code</returns>
         [HttpPost]
+        [Consumes("application/xml")]
         public async Task<ActionResult<Immunization>> PostImmunization(Immunization immunization)
         {
             //Auto generate the UpdatedTime

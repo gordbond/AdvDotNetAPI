@@ -92,6 +92,7 @@ namespace AdvDotNetAPI.Controllers
         /// <param name="provider">provider data to update</param>
         /// <returns>No content - status code representing no content</returns>
         [HttpPut("{id}")]
+        [Consumes("application/xml")]
         public async Task<IActionResult> PutProvider(Guid id, Provider provider)
         {
             if (id != provider.Id)
@@ -134,6 +135,7 @@ namespace AdvDotNetAPI.Controllers
         /// <param name="provider">provider data to create</param>
         /// <returns>ActionResult - status code 201</returns>
         [HttpPost]
+        [Consumes("application/xml")]
         public async Task<ActionResult<Provider>> PostProvider(Provider provider)
         {
             _context.Providers.Add(provider);

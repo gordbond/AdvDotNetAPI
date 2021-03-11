@@ -44,7 +44,7 @@ namespace AdvDotNetAPI.Middleware
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             string customMessage = "";
             
-
+            
             switch (context.Response.StatusCode) {
                 case 200:
                     customMessage = "The GET or PUT completed successfully.";

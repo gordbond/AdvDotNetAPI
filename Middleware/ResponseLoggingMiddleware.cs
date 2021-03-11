@@ -39,8 +39,10 @@ namespace AdvDotNetAPI.Middleware
             await using var responseBody = _recyclableMemoryStreamManager.GetStream();
             context.Response.Body = responseBody;
             await _next(context);
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
+            var text = await new StreamReader(context.Response.Body).ReadToEndAsync();
+            context.Response.Body.Seek(0, SeekOrigin.Begin);
             string customMessage = "";
-            //var context2 = context.Features.Get<IExceptionHandlerFeature>();
             
 
             switch (context.Response.StatusCode) {

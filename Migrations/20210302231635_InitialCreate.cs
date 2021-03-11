@@ -5,6 +5,10 @@ namespace AdvDotNetAPI.Migrations
 {
     public partial class InitialCreate : Migration
     {
+        /// <summary>
+        /// MigrationBuilder that is used in the API, variables for Immunization class are being set to columns in a table
+        /// </summary>
+        /// <param name="migrationBuilder"> MigrationBuilder Object</param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -21,9 +25,11 @@ namespace AdvDotNetAPI.Migrations
                 },
                 constraints: table =>
                 {
+                    //Primary Key = Immunization id
                     table.PrimaryKey("PK_Immunizations", x => x.Id);
                 });
 
+           // Table created using variables for Organizations class are being set to columns 
             migrationBuilder.CreateTable(
                 name: "Organizations",
                 columns: table => new
@@ -36,9 +42,11 @@ namespace AdvDotNetAPI.Migrations
                 },
                 constraints: table =>
                 {
+                    //Primary Key = Organization id
                     table.PrimaryKey("PK_Organizations", x => x.Id);
                 });
 
+            // Table created using variables for Patients class are being set to columns 
             migrationBuilder.CreateTable(
                 name: "Patients",
                 columns: table => new
@@ -51,9 +59,11 @@ namespace AdvDotNetAPI.Migrations
                 },
                 constraints: table =>
                 {
+                    //Primary Key = Patients id
                     table.PrimaryKey("PK_Patients", x => x.Id);
                 });
 
+            // Table created using variables for Providers class are being set to columns 
             migrationBuilder.CreateTable(
                 name: "Providers",
                 columns: table => new
@@ -67,10 +77,15 @@ namespace AdvDotNetAPI.Migrations
                 },
                 constraints: table =>
                 {
+                    //Primary Key = Providers id
                     table.PrimaryKey("PK_Providers", x => x.Id);
                 });
         }
 
+        /// <summary>
+        /// Method Down that uses the MigrationBuilder to drop all tables
+        /// </summary>
+        /// <param name="migrationBuilder"></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

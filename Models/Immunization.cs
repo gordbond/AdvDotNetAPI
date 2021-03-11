@@ -14,27 +14,27 @@ namespace AdvDotNetAPI.Models
         public class Immunization : MedicalEntity
         {
 
-      
 
-            //Official name for the Immunization
-            [Required]
+
+        //Official name for the Immunization with getter and setter methods
+        [Required]
             [StringLength(128)]
             public string OfficialName { get; set; }
 
-            //Trademark name for Immunization
-            [StringLength(128)]
+        //Trademark name for Immunization with getter and setter methods
+        [StringLength(128)]
             public string TradeName { get; set; }
 
-            //Lot Number
-            [Required]
+        //Lot Number with getter and setter methods
+        [Required]
             [StringLength(255)]
             public string LotNumber { get; set; }
 
-            //Expiration date 
-            [Required]
+        //Expiration date  DateTimeOffset with getter and setter methods
+        [Required]
             public DateTimeOffset Expiration { get; set; }
 
-            //Date updated
+            //Date updated with getter and setter methods
             public DateTimeOffset UpdatedTime { get; set; }
         }
     

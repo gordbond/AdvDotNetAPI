@@ -16,10 +16,16 @@ namespace AdvDotNetAPI.Middleware
     /// </summary>
     public class ResponseLoggingMiddleware
     {
+        //MiddleWare variables being declares
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
         private readonly RecyclableMemoryStreamManager _recyclableMemoryStreamManager;
 
+        /// <summary>
+        /// Method that logs middleware by Creating the Logger
+        /// </summary>
+        /// <param name="next">RequestDelegate Object</param>
+        /// <param name="loggerFactory">ILoggerFactory Object</param>
         public ResponseLoggingMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
             _next = next;
@@ -27,12 +33,22 @@ namespace AdvDotNetAPI.Middleware
                       .CreateLogger<ResponseLoggingMiddleware>();
             _recyclableMemoryStreamManager = new RecyclableMemoryStreamManager();
         }
+        /// <summary>
+        /// Async method invoke that runs asynchronously that logs the response of the HttpContext
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext context)
         {
             await LogResponse(context);
         }
 
 
+        /// <summary>
+        /// Log Response method that returns back a response based on the HttpStatus Code from a Switch Case
+        /// </summary>
+        /// <param name="context">HttpContext</param>
+        /// <returns>Custom Message based on HttpStatus</returns>
         private async Task LogResponse(HttpContext context)
         {
             var originalBodyStream = context.Response.Body;
@@ -44,7 +60,7 @@ namespace AdvDotNetAPI.Middleware
             context.Response.Body.Seek(0, SeekOrigin.Begin);
             string customMessage = "";
             
-
+            //Custom Messages that come with Status Code
             switch (context.Response.StatusCode) {
                 case 200:
                     customMessage = "The GET or PUT completed successfully.";

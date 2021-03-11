@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 /// </summary>
 namespace AdvDotNetAPI.Middleware
 {
+    /// <summary>
+    /// Class that return middleware for response logging
+    /// </summary>
     public static class ResponseLoggingMiddlewareExtension
     {
             public static IApplicationBuilder UseResponseLoggingMiddleware(this IApplicationBuilder builder)

@@ -19,6 +19,7 @@ namespace AdvDotNetAPI
 {
     public class Startup
     {
+        //Startup Constructor that passes in an IConfiguration object
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;

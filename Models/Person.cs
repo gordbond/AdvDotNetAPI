@@ -12,9 +12,11 @@ namespace AdvDotNetAPI.Models
     /// </summary>
     public class Person : MedicalEntity
     {
+        //FirstName string variable with getter and setter methods
         [Required]
         public string FirstName { get; set; }
 
+        //LastName string variable with getter and setter methods
         [Required]
         public string LastName { get; set; }
     }

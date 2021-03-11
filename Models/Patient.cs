@@ -12,6 +12,7 @@ namespace AdvDotNetAPI.Models
     /// </summary>
     public class Patient : Person
     {
+        //DateTimeOffset Object with getter and setter methods
         [Required]
         public DateTimeOffset DateOfBirth { get; set; }
 

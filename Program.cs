@@ -23,6 +23,11 @@ namespace AdvDotNetAPI
             CreateWebHostBuilder(args).Build().Run();
         }
 
+        /// <summary>
+        /// IWebHostBuilder creates a default builder which configures the Kestrel builder and adds details to Kestrel Builder
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns>IWebHostBuilder</returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
            WebHost.CreateDefaultBuilder(args)
            .UseStartup<Startup>()

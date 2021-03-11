@@ -90,6 +90,7 @@ namespace AdvDotNetAPI.Controllers
         /// <param name="organization">Data for organization</param>
         /// <returns>No content and status code 204</returns>
         [HttpPut("{id}")]
+        [Consumes("application/xml")]
         public async Task<IActionResult> PutOrganization(Guid id, Organization organization)
         {
             if (id != organization.Id)
@@ -131,6 +132,7 @@ namespace AdvDotNetAPI.Controllers
         /// <param name="organization">Data for organization</param>
         /// <returns>Action result and status code 201</returns>
         [HttpPost]
+        [Consumes("application/xml")]
         public async Task<ActionResult<Organization>> PostOrganization(Organization organization)
         {
             _context.Organizations.Add(organization);

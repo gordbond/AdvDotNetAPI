@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using AdvDotNetAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Serilog.Extensions.Logging.File;
+using AdvDotNetAPI.Middleware;
 
 namespace AdvDotNetAPI
 {
@@ -54,6 +55,8 @@ namespace AdvDotNetAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdvDotNetAPI v1"));
             }
+
+            app.UseResponseLoggingMiddleware();
 
             app.UseRouting();
 

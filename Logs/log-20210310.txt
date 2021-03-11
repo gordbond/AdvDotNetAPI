@@ -1,0 +1,6 @@
+Message: Id = d5c957b3-f747-4c98-bbf7-2a1efe2ab47e, Tag = , Length = 175 bytes, Status code: 415, Id: 42380012-7252-43c8-adca-5161e7cc2bf3
+Message: Test!, Status code: 415, Id: 171d9c68-c955-4673-a6ff-f6e3f7804242
+Message: Test!, Status code: 415, Id: 89e259a2-aa36-4bc7-951d-2562130aa8dc
+Message: Test!, Status code: 415, Id: e8c17214-2522-4b26-9ee5-a95165e8b942
+Message: Test!, Status code: 415, Id: d7ede78e-9618-4494-959a-4b3d0cdcb819
+Message: The content is not in either XML or JSON format., Status code: 415, Id: b6234e0a-b8fa-4835-9c23-84a404a734ac

@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* We, Gord Bond, student number 000786196, Tiago Franco de Goes Teles, student number 000786450, 
+ * Olaoluwa Anthony-Egorp, student number 000776467, and Mitchell Aninyang, student number 000796709, 
+ * certify that all code submitted is our own work; that we have not copied it from any other source. 
+ * We also certify that we have not allowed our work to be copied by others.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -90,6 +95,7 @@ namespace AdvDotNetAPI.Controllers
         /// <param name="organization">Data for organization</param>
         /// <returns>No content and status code 204</returns>
         [HttpPut("{id}")]
+        [Consumes("application/xml")]
         public async Task<IActionResult> PutOrganization(Guid id, Organization organization)
         {
             if (id != organization.Id)
@@ -131,6 +137,7 @@ namespace AdvDotNetAPI.Controllers
         /// <param name="organization">Data for organization</param>
         /// <returns>Action result and status code 201</returns>
         [HttpPost]
+        [Consumes("application/xml")]
         public async Task<ActionResult<Organization>> PostOrganization(Organization organization)
         {
             _context.Organizations.Add(organization);

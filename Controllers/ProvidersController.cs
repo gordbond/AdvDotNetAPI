@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* We, Gord Bond, student number 000786196, Tiago Franco de Goes Teles, student number 000786450, 
+ * Olaoluwa Anthony-Egorp, student number 000776467, and Mitchell Aninyang, student number 000796709, 
+ * certify that all code submitted is our own work; that we have not copied it from any other source. 
+ * We also certify that we have not allowed our work to be copied by others.
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -84,7 +89,7 @@ namespace AdvDotNetAPI.Controllers
             return provider;
         }
 
-        // 
+       
         /// <summary>
         /// PUT: api/Providers/5
         /// </summary>
@@ -92,6 +97,7 @@ namespace AdvDotNetAPI.Controllers
         /// <param name="provider">provider data to update</param>
         /// <returns>No content - status code representing no content</returns>
         [HttpPut("{id}")]
+        [Consumes("application/xml")]
         public async Task<IActionResult> PutProvider(Guid id, Provider provider)
         {
             if (id != provider.Id)
@@ -134,6 +140,7 @@ namespace AdvDotNetAPI.Controllers
         /// <param name="provider">provider data to create</param>
         /// <returns>ActionResult - status code 201</returns>
         [HttpPost]
+        [Consumes("application/xml")]
         public async Task<ActionResult<Provider>> PostProvider(Provider provider)
         {
             _context.Providers.Add(provider);

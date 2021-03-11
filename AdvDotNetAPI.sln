@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdvDotNetAPI", "AdvDotNetAPI.csproj", "{7CB12096-FD11-46E7-A80D-35B90E4E9582}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvDotNetAPI", "AdvDotNetAPI.csproj", "{7CB12096-FD11-46E7-A80D-35B90E4E9582}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unitTestsAdvDotNetAPI", "..\unitTestsAdvDotNetAPI\unitTestsAdvDotNetAPI.csproj", "{6060013B-1724-42CF-ABC5-07D3017640BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7CB12096-FD11-46E7-A80D-35B90E4E9582}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CB12096-FD11-46E7-A80D-35B90E4E9582}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CB12096-FD11-46E7-A80D-35B90E4E9582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6060013B-1724-42CF-ABC5-07D3017640BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6060013B-1724-42CF-ABC5-07D3017640BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6060013B-1724-42CF-ABC5-07D3017640BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6060013B-1724-42CF-ABC5-07D3017640BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

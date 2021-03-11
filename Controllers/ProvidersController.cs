@@ -84,7 +84,7 @@ namespace AdvDotNetAPI.Controllers
             return provider;
         }
 
-        // 
+       
         /// <summary>
         /// PUT: api/Providers/5
         /// </summary>
